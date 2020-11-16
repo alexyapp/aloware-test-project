@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    // dd(\App\Models\Comment::with('replies')->find(2)->toArray());
+
     return view('welcome');
 });

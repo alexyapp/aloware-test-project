@@ -30,9 +30,15 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        Route::bind('entity', function ($value, $route) {
+            $id = $route->parameter('id');
+            $route->forgetParameter('id');
+            $model = '\App\Models\\'.$value;
+
+            return $model::findOrFail($id);
+        });
     }
 
     /**
@@ -45,8 +51,6 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
-
-        //
     }
 
     /**

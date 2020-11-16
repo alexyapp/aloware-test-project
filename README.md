@@ -14,5 +14,10 @@ Password: root
 
 Back to your Terminal, run the migrations (make sure you're still "bashed" in to workspace):
 ```
-php artisan migrate
+php artisan migrate && php artisan db:seed
+```
+
+Compile Vue
+```
+cd path/to/project && npm install && npm run dev
 ```

@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::namespace('Api')->group(function () {
+    Route::get('posts/{id}', 'PostController@show');
+
+    Route::group([
+        'prefix' => '{entity}/{id}/comments',
+        'where' => [
+            'entity' => '[A-Za-z]+',
+            'id' => '[0-9]+',
+        ],
+        'middleware' => 'XSS',
+    ], function () {
+        Route::get('/', 'CommentController@show');
+        Route::post('/', 'CommentController@store');
+    });
 });
