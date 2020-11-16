@@ -38,11 +38,22 @@ export default {
                 let { data: { data: comment } } = await axios.post(`/${this.entity.commentable_type}/${this.entity.id}/comments`, { name, body });
 
                 this.$emit('commentAdded', comment);
-            } catch (e) {
-                // TODO: handle error
-            } finally {
+
                 this.name = '';
                 this.body = '';
+            } catch (e) {
+                const { status, data: { errors } } = e.response;
+
+                if (status === 422) {
+                    for (let key in errors) {
+                        this.$toast.open({
+                            message: errors[key][0],
+                            type: 'error',
+                            position: 'top-right'
+                        });
+                    }
+                }
+            } finally {
                 this.loading = false;
             }
         }

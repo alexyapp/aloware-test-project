@@ -7,13 +7,14 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-default.css';
 import axios from "axios";
-
-Vue.prototype.$http = axios;
 
 axios.defaults.headers.common = {'X-Requested-With': 'XMLHttpRequest'}
 axios.defaults.baseURL = 'http://localhost/api';
+
+Vue.use(VueToast);
 
 /**
  * The following block of code may be used to automatically register your
